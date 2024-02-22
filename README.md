@@ -1,73 +1,65 @@
-# Contents
+<div align="center">
+<img src="https://grow.empress.eco/uploads/default/original/2X/1/1f1e1044d3864269d2a613577edb9763890422ab.png" alt="Project Logo">
+<h1 align="center">Efficient Kubernetes Deployment with Helm</h1>
+<p align="center">
+Streamline your Kubernetes deployment using our robust Helm chart.
+<br />
+<a href="https://empress.eco/">Visit Our Website</a>
+·
+<a href="https://grow.empress.eco/">Get Support</a>
+·
+<a href="https://github.com/empress-eco/helm/issues">Report a Bug</a>
+·
+<a href="https://github.com/empress-eco/helm/issues">Request a Feature</a>
+</p>
+</div>
 
-### Frappe/ERPNext Helm Chart
+## About The Project
 
-Helm Chart to deploy a *frappe-bench*-like environment on Kubernetes. It adds following resources:
+This Helm chart is crafted for developers striving for a more efficient and simplified deployment process on Kubernetes. It facilitates a comprehensive environment that mirrors a _Empress-bench_, offering optimized resource allocation and scaling to ensure smooth operations for your applications.
 
-ConfigMaps:
+### Key Features
+- Simplified deployment of ConfigMaps, Deployments, HorizontalPodAutoscalers, Ingresses, Jobs, PVC, Secrets, Services, and ServiceAccounts.
+- Dynamic generation of `ingress` with custom name using `helm template`.
+- Extensive job features including volume permissions fixing, db host configuring, site creation and dropping, backup and migration, and running custom commands.
+- Efficient scaling of deployments with HorizontalPodAutoscalers.
+- Persistent volume allocation for sites, config, and logs.
 
-- `nginx-config` is used to override default.conf for nginx reverse proxy and static assets container.
+## Technical Stack and Setup Instructions
 
-Deployments:
+### Prerequisites
+Ensure Helm is installed on your machine. If it isn't, refer to the [Helm installation guide](https://helm.sh/docs/intro/install/).
 
-- `gunicorn` deployment contains frappe/erpnext gunicorn.
-- `nginx` deployment contains frappe/erpnext static assets and nginx reverse proxy.
-- `scheduler` deployment contains frappe/erpnext scheduler.
-- `socketio` deployment contains frappe/erpnext socketio.
-- `worker-d` deployment contains frappe/erpnext default worker.
-- `worker-l` deployment contains frappe/erpnext long worker.
-- `worker-s` deployment contains frappe/erpnext short worker.
+### Installation
+Start by cloning this repository to your local machine
+```sh
+git clone https://github.com/empress-eco/helm.git
+```
+Navigate to the cloned directory and deploy the chart
+```sh
+helm install [NAME] [CHART] --namespace [NAMESPACE]
+```
 
-HorizontalPodAutoscalers:
+## Usage
+Easily deploy your Kubernetes environment and make configuration adjustments to meet your specific needs. The Helm chart offers a user-centric, flexible, and efficient means to manage your resources.
 
-- `gunicorn` hpa scales frappe/erpnext gunicorn deployment.
-- `nginx` hpa scales frappe/erpnext nginx deployment.
-- `socketio` hpa scales frappe/erpnext socketio deployment.
-- `worker-d` hpa scales frappe/erpnext default worker deployment.
-- `worker-l` hpa scales frappe/erpnext long worker deployment.
-- `worker-s` hpa scales frappe/erpnext short worker deployment.
+## Contribution Guidelines
+We warmly welcome contributions! To contribute:
 
-Ingresses:
+- Fork the Project
+- Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+- Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+- Push to the Branch (`git push origin feature/AmazingFeature`)
+- Open a Pull Request
 
-- `ingress` with custom name can be dynamically generated using `helm template` and configured values.
+## License and Acknowledgements
 
-Jobs:
+### License
+This project, including all contributions, is licensed under the MIT License.
 
-- `vol-fix` job to fix volume permissions, changes the `uid` and `gid` to `1000:1000`.
-- `bench-conf` job to configure db host, redis hosts and socketio port.
-- `create-site` job to create new site.
-- `drop-site` job to drop existing site.
-- `backup-push` job to backup and optionally push backup to S3 for existing site.
-- `migrate` job to migrate existing site.
-- `custom` job to run custom additional commands and configuration.
+### Acknowledgements
+- Our heartfelt thanks go to all contributors and users who help to improve this Helm chart. Your efforts make a significant impact.
+- Special thanks to [Empress](https://empress.eco/) for their continuous support.
+- We express profound gratitude to the Empress Community, the architects of the essential tools powering this project. Their innovation and dedication have been instrumental in building the foundations and functionalities we rely on. We appreciate their pioneering work and ongoing support.
 
-PVC:
-
-- `erpnext` persistent volume claim is used to allocate volume for sites and config deployed with this release
-- `erpnext-logs` persistent volume claim is used to allocate volume for logs
-
-Secrets:
-
-- `secret` is used to store `db-root-password` for external db host
-
-Services:
-
-- `gunicorn` service exposes pods from gunicorn deployment.
-- `nginx` service exposes pods from nginx deployment.
-- `socketio` service exposes pods from socketio deployment.
-
-ServiceAccounts:
-
-- `erpnext` service account is used by all deployments.
-
-### Release Wizard
-
-This is a release script for maintainers. It does the following:
-
-- Checks latest tag for given major release for frappe and erpnext using git.
-- Validates that release always bumps up.
-- Bumps values.yaml and Chart.yaml for release changes
-- Adds git tag for chart version
-- Push to selected remote
-
-This will trigger workflow to publish new version of helm chart.
+Visit [Empress GitHub](https://github.com/empress-eco/) for more information.
